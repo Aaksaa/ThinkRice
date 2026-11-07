@@ -6,6 +6,7 @@
 
 A collection of configurations and assets for linux ricing. This project focuses on terminal appearance, Lenovo/ThinkPad visual identity, and ThinkPad-themed wallpapers.
 
+> Note: Not affiliated with Lenovo/IBM. ThinkPad is a trademark of Lenovo.
 ## Project contents
 
 | Component     | Description                                             |
