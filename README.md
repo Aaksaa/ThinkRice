@@ -7,6 +7,7 @@
 A collection of configurations and assets for linux ricing. This project focuses on terminal appearance, Lenovo/ThinkPad visual identity, and ThinkPad-themed wallpapers.
 
 > Note: Not affiliated with Lenovo/IBM. ThinkPad is a trademark of Lenovo.
+
 ## Project contents
 
 | Component     | Description                                             |
@@ -14,26 +15,40 @@ A collection of configurations and assets for linux ricing. This project focuses
 | `fastfetch/`  | Fastfetch configuration and ThinkPad/Lenovo ASCII logos |
 | `neofetch/`   | ASCII logos that can be used with Neofetch              |
 | `wallpapers/` | Collection of ThinkPad-themed wallpapers                |
+| `grub/`        | Collection of GRUB custom configs                      |
 
-### Fastfetch
+## Fastfetch
+
+Fastfetch configuration screenshot;
+<p align="center">
+  <img src="./assets/screenshot/fastfetch-preview.png" width="800" alt="fastfetch-screenshot-example">
+</p>
 
 Several configurations are available:
 
 - `fastfetch/ascii` - contains ASCII logos that can be called through the
- Neofetch configuration, including several variations of ThinkPad, Lenovo, ThinkCentre, and ThinkServer logos.
+  Neofetch configuration, including several variations of ThinkPad, Lenovo, ThinkCentre, and ThinkServer logos.
 - `fastfetch/configs` - several examples of ready-to-use configurations for fastfetch.
 
 The configuration displays information such as device, CPU, GPU, memory, disk, operating system, kernel, shell, desktop environment/window manager, uptime, date, and system installation age.
 
-### Neofetch
 
-The `neofetch/ascii/` directory contains ASCII logos that can be called through the Neofetch configuration, including several variations of ThinkPad, Lenovo, ThinkCentre, and ThinkServer logos.
+## Running Fastfetch
 
-And be added another configs for neofetch.
+If you want to try the configuration, copy the desired configuration to the active configuration location or run it directly from the project directory.
+
+Example:
+
+```bash
+fastfetch --config ./configs/thinkpad-vertical.jsonc
+```
+
+If a configuration refers to a different logo file name, change the `logo.source` value to match the file available in `~/.config/fastfetch/ascii/`.
+
 
 ### Wallpaper
 
-The `wallpapers/` directory contains ThinkPad-themed PNG wallpapers. Will be added another wallaper soon.
+The `wallpapers/` directory contains ThinkPad-themed PNG wallpapers. Will be added another wallpaper soon.
 
 ## Requirements
 
@@ -70,17 +85,18 @@ backed up to `~/.config/fastfetch-backup-<timestamp>/`.
 
 Or you can install manually with gitclone, rename the file and copy the file into ~/.config/fastfetch/. Don't forget to renaming the file into config.jsonc.
 
-## Running Fastfetch
+## Configuration notes
 
-If you want to try the configuration, copy the desired configuration to the active configuration location or run it directly from the project directory.
+- Some logos use Unicode characters and Nerd Font icons.
+- Fastfetch files use the JSONC format, so comments inside them are intentional.
+- Fastfetch configurations that use logo paths relative to `~/.config/fastfetch/ascii/` require the ASCII assets to have been copied to that location.
+- Wallpapers can be selected through the desktop environment or wallpaper manager you use.
 
-Example:
+### Neofetch (deprecated)
 
-```bash
-fastfetch --config ./configs/thinkpad-vertical.jsonc
-```
+The `neofetch/ascii/` directory contains ASCII logos that can be called through the Neofetch configuration, including several variations of ThinkPad, Lenovo, ThinkCentre, and ThinkServer logos.
 
-If a configuration refers to a different logo file name, change the `logo.source` value to match the file available in `~/.config/fastfetch/ascii/`.
+And be added another configs for neofetch.
 
 ## Using logos with Neofetch
 
@@ -92,12 +108,6 @@ ascii_custom="$HOME/.config/neofetch/ascii/thinkpad-h.txt"
 
 Replace `thinkpad-h.txt` with another logo from the `neofetch/ascii/` directory according to your preference.
 
-## Configuration notes
-
-- Some logos use Unicode characters and Nerd Font icons.
-- Fastfetch files use the JSONC format, so comments inside them are intentional.
-- Fastfetch configurations that use logo paths relative to `~/.config/fastfetch/ascii/` require the ASCII assets to have been copied to that location.
-- Wallpapers can be selected through the desktop environment or wallpaper manager you use.
 
 ## Customization
 
@@ -105,3 +115,15 @@ Replace `thinkpad-h.txt` with another logo from the `neofetch/ascii/` directory 
 2. Change `logo.source` in the Fastfetch configuration.
 3. Adjust colors, padding, modules, and output format as needed.
 4. Choose a wallpaper from `wallpapers/`.
+
+# GRUB Theme
+
+[See the details](./grub/thinkpad/README.md)
+Documentation soon.
+
+# License
+
+- Main package - **MIT** (see [LICENSE](LICENSE))
+- GRUB theme (`grub/thinkpad`) - **GPL-3.0** (see [grub/thinkpad/LICENSE](grub/thinkpad/LICENSE))
+
+> The GRUB theme is a separate component derived from [distro-grub-themes](https://github.com/AdisonCavani/distro-grub-themes) and does not affect the license of the main package.
