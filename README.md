@@ -121,6 +121,88 @@ Replace `thinkpad-h.txt` with another logo from the `neofetch/ascii/` directory 
 [See the details](./grub/thinkpad/README.md)
 Documentation soon.
 
+## Installation via Nix Flake
+
+### Prerequisites
+- [Nix](https://nixos.org/) package manager installed.
+- [Home Manager](https://github.com/nix-community/home-manager) (optional, but recommended for user-level configs).
+
+### 1. Add as Input
+
+Add `thinkrice` to the `inputs` section of your `flake.nix`:
+
+```nix
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    
+    # Add ThinkRice
+    thinkrice = {
+      url = "github:Aaksaa/thinkrice";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+}
+```
+
+### 2. Configure Home Manager
+
+Import the module and enable it in your Home Manager configuration:
+
+```nix
+{ inputs, ... }:
+
+{
+  imports = [
+    inputs.thinkrice.homeManagerModules.default
+  ];
+
+  programs.thinkrice = {
+    enable = true;
+    
+    # Choose a config from fastfetch/configs/ 
+    # e.g., "thinkpad-vertical.jsonc", "thinkpad-horizontal.jsonc"
+    configName = "thinkpad-vertical.jsonc";
+    
+    # Set to true if you still use Neofetch
+    enableNeofetch = false;
+  };
+  
+  # Ensure fastfetch is enabled if you haven't already
+  programs.fastfetch.enable = true;
+}
+```
+
+This will automatically:
+1. Install the selected `fastfetch` configuration to `~/.config/fastfetch/config.jsonc`.
+2. Symlink all ASCII logos to `~/.config/fastfetch/ascii/`.
+3. Make wallpapers available in `~/.local/share/wallpapers/thinkrice/`.
+
+### 3. Configure GRUB Theme (NixOS)
+
+To apply the ThinkPad theme to your GRUB bootloader, add the following to your NixOS `configuration.nix` or `hardware-configuration.nix`:
+
+```nix
+{ inputs, pkgs, ... }:
+
+{
+  boot.loader.grub = {
+    enable = true;
+    # Point to the theme directory inside the Nix store
+    theme = "${inputs.thinkrice.packages.${pkgs.system}.default}/share/thinkrice/grub/thinkpad";
+  };
+}
+```
+
+After rebuilding (`sudo nixos-rebuild switch`), update your GRUB configuration to apply the changes:
+```bash
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+### Customization
+Fastfetch: Edit ~/.config/fastfetch/config.jsonc or choose a different preset by changing configName in your Nix config.
+Wallpapers: Browse ~/.local/share/wallpapers/thinkrice/ and set your preferred image via your desktop environment's settings.
+ASCII Logos: Available in ~/.config/fastfetch/ascii/. You can reference them manually in your config using logo.source.
+
 # License
 
 - Main package - **MIT** (see [LICENSE](LICENSE))
